@@ -10,6 +10,11 @@ module Lotus
       def stylesheet(*sources)
         AssetTags.render(:stylesheet, *sources)
       end
+
+      def image_path(path)
+        ThreadCache.cache(path)
+        path
+      end
     end
   end
 end

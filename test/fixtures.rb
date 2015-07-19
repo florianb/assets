@@ -2,6 +2,8 @@ require 'erb'
 require 'sass'
 require 'coffee_script'
 
+# FIXME integration test must be made with Lotus::View.
+# FIXME Lotus::Assets::Helpers::AssetTags.render returns an Lotus::Utils::Escape::SafeString instance, test it.
 class View
   include Lotus::Assets::Helpers
 

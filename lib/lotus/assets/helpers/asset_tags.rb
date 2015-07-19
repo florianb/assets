@@ -1,4 +1,5 @@
 require 'lotus/assets/helpers/asset_tag'
+require 'lotus/utils/escape'
 
 module Lotus
   module Assets
@@ -7,9 +8,11 @@ module Lotus
         LINE_SEPARATOR = "\n".freeze
 
         def self.render(type, *sources)
-          sources.map do |source|
-            AssetTag.render(configuration, type, source)
-          end.join(LINE_SEPARATOR)
+          Utils::Escape::SafeString.new(
+            sources.map do |source|
+              AssetTag.render(configuration, type, source)
+            end.join(LINE_SEPARATOR)
+          )
         end
 
         private

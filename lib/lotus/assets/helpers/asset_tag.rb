@@ -1,7 +1,6 @@
 require 'uri'
-require 'set'
-require 'thread'
 require 'lotus/assets/compiler'
+require 'lotus/assets/thread_cache'
 
 module Lotus
   module Assets
@@ -28,10 +27,7 @@ module Lotus
         end
 
         def self.cache(path)
-          Mutex.new.synchronize do
-            Thread.current[:__lotus_assets] ||= Set.new
-            Thread.current[:__lotus_assets].add(path.to_s)
-          end
+          ThreadCache.cache(path)
         end
       end
     end

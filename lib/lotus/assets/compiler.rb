@@ -1,3 +1,6 @@
+require 'lotus/utils/basic_object'
+require 'lotus/assets/thread_cache'
+
 module Lotus
   module Assets
     class MissingAsset < ::StandardError
@@ -10,6 +13,13 @@ module Lotus
     class UnknownAssetEngine < ::StandardError
       def initialize(source)
         super("No asset engine registered for `#{ ::File.basename(source) }'")
+      end
+    end
+
+    class Scope < Utils::BasicObject
+      def image_path(path)
+        ThreadCache.cache(path)
+        path
       end
     end
 
@@ -75,7 +85,7 @@ module Lotus
       end
 
       def compile!
-        write { Tilt.new(source).render }
+        write { Tilt.new(source).render(scope) }
       rescue RuntimeError
         raise UnknownAssetEngine.new(source)
       end
@@ -96,6 +106,10 @@ module Lotus
 
       def cache
         self.class.cache
+      end
+
+      def scope
+        Scope.new
       end
     end
   end
