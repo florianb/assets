@@ -54,6 +54,15 @@ class AssetPathHelper
   end
 end
 
+class AssetUrlHelper
+  include View
+
+  def self.template
+    File.join(__dir__, 'fixtures', 'asset-url-helper.erb')
+  end
+end
+
+
 class RenderMultipleAssets
   include View
 
