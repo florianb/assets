@@ -46,6 +46,14 @@ class CustomAssetsPrefix
   include View
 end
 
+class AssetPathHelper
+  include View
+
+  def self.template
+    File.join(__dir__, 'fixtures', 'asset-path-helper.erb')
+  end
+end
+
 class RenderMultipleAssets
   include View
 
